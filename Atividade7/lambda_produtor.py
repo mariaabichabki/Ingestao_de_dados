@@ -15,11 +15,12 @@ def lambda_handler(event, context):
         #definindo o bucket e o arquivo através da inserção no s3
         s3_bucket = record['s3']['bucket']['name']
         s3_key = record['s3']['object']['key']
+        print(s3_bucket)
+        print(s3_key)
         s3_response = s3_client.get_object(Bucket=s3_bucket, Key=s3_key)
         
         #realizando leitura do arquivo inserido
         csv_content = s3_response['Body'].read().decode('ISO-8859-1').splitlines()
-
         #processando o arquivo
         csv_reader = csv.reader(csv_content)
         #extraindo linha por linha do csv e criando mensagem pra fila
